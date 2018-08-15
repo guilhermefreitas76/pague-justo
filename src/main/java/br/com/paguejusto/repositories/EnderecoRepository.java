@@ -5,11 +5,11 @@ import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.paguejusto.domain.Categoria;
+import br.com.paguejusto.domain.Endereco;
 
 @Repository
-public interface CategoriaRepository extends CrudRepository<Categoria, Long>{
+public interface EnderecoRepository extends CrudRepository<Endereco, Long>{
 
-	public abstract Optional<Categoria> findById(Long id);
+	public abstract Optional<Endereco> findById(Long id);
 	
 }

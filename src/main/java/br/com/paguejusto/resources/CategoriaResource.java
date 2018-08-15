@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.paguejusto.domain.Categoria;
 import br.com.paguejusto.services.CategoriaService;
+import javassist.tools.rmi.ObjectNotFoundException;
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -20,9 +21,15 @@ public class CategoriaResource {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Categoria find(@PathVariable Long id) {
+		try {
+			Optional<Categoria> categoria = categoriaService.findById(id);
 
-		Optional<Categoria> categoria = categoriaService.findById(id);
-		return categoria.orElse(null);
+			return categoria.orElseThrow(() -> new ObjectNotFoundException(
+					"Objeto não encontrado id: " + id + ", Tipo: " + Categoria.class.getName()));
+		} catch (ObjectNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
