@@ -1,10 +1,13 @@
 package br.com.paguejusto.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "tb_estado")
@@ -14,8 +17,9 @@ public class Estado extends Abstract {
 
 	private String nome;
 
+	@JsonBackReference
 	@OneToMany(mappedBy = "estado")
-	private List<Cidade> cidades;
+	private List<Cidade> cidades = new ArrayList<>();
 
 	public String getNome() {
 		return nome;
