@@ -11,8 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.paguejusto.domain.enums.TipoCliente;
 
@@ -27,7 +26,6 @@ public class Cliente extends Abstract {
 	private String cpfOuCnpj;
 	private Integer tipoCliente;
 
-	@JsonManagedReference//Cliente conhece os endereços...referencia ciclica...
 	@OneToMany(mappedBy="cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 
@@ -35,7 +33,7 @@ public class Cliente extends Abstract {
 	@CollectionTable(name="tb_telefone")
 	private Set<String> telefones = new HashSet<>();
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(mappedBy="cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 

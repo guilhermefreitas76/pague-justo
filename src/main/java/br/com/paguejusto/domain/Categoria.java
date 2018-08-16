@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 @Table(name = "tb_categoria")
 public class Categoria extends Abstract {
@@ -17,7 +15,6 @@ public class Categoria extends Abstract {
 
 	private String nome;
 	
-	@JsonManagedReference
 	@ManyToMany(mappedBy="categorias")
 	private List<Produto> produtos = new ArrayList<>();
 

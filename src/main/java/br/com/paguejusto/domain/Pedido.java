@@ -11,7 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "tb_pedido")
@@ -22,12 +21,10 @@ public class Pedido extends Abstract {
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date instante;
 
-	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "pagamento_id")
 	private Pagamento pagamento;
 
-	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
