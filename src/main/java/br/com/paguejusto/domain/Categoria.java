@@ -18,6 +18,16 @@ public class Categoria extends Abstract {
 	@ManyToMany(mappedBy="categorias")
 	private List<Produto> produtos = new ArrayList<>();
 
+	public Categoria() {
+		
+	}
+	
+	public Categoria(Long id, String nome) {
+		super();
+		this.id = id;
+		this.nome = nome;
+	}
+
 	public String getNome() {
 		return nome;
 	}

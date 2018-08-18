@@ -22,7 +22,7 @@ public abstract class Abstract implements Serializable{
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	protected Long id;
 	
 	@Column(name = "data_hora_alteracao")
 	private Timestamp  dataHoraAlteracao;

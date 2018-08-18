@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 
 import br.com.paguejusto.domain.Categoria;
+import br.com.paguejusto.dto.CategoriaDTO;
 
 
 public interface CategoriaService {
@@ -24,5 +25,6 @@ public interface CategoriaService {
 	
 	public abstract Page<Categoria> findPage(Integer page,Integer linesPerPage,String orderBy, String direction);
 		
+	public abstract Categoria fromDTO(CategoriaDTO categoriaDTO);
 	
 }
