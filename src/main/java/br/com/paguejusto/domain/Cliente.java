@@ -26,15 +26,15 @@ public class Cliente extends Abstract {
 	private String cpfOuCnpj;
 	private Integer tipoCliente;
 
-	@OneToMany(mappedBy="cliente")
+	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 
 	@ElementCollection
-	@CollectionTable(name="tb_telefone")
+	@CollectionTable(name = "tb_telefone")
 	private Set<String> telefones = new HashSet<>();
-	
+
 	@JsonIgnore
-	@OneToMany(mappedBy="cliente")
+	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 
 	public String getNome() {
@@ -68,6 +68,11 @@ public class Cliente extends Abstract {
 	public void setTipoCliente(TipoCliente tipoCliente) {
 		this.tipoCliente = tipoCliente.getCodigo();
 	}
+	
+	public Cliente() {
+		
+	}
+	
 
 	public Cliente(String nome, String email, String cpfOuCnpj, Integer tipoCliente, List<Endereco> enderecos,
 			Set<String> telefones) {
@@ -78,6 +83,16 @@ public class Cliente extends Abstract {
 		this.tipoCliente = tipoCliente;
 		this.enderecos = enderecos;
 		this.telefones = telefones;
+	}
+
+	public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipoCliente) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
+		this.cpfOuCnpj = cpfOuCnpj;
+		this.tipoCliente = (tipoCliente == null) ? null : tipoCliente.getCodigo();
+
 	}
 
 	public List<Endereco> getEnderecos() {
@@ -107,5 +122,5 @@ public class Cliente extends Abstract {
 	public void setTipoCliente(Integer tipoCliente) {
 		this.tipoCliente = tipoCliente;
 	}
-	
+
 }
