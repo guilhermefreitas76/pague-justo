@@ -47,8 +47,14 @@ public class CategoriaServiceImpl implements CategoriaService {
 
 	@Override
 	public Categoria update(Categoria categoria) {
-		findById(categoria.getId());
-		return categoriaRepository.save(categoria);
+		Optional<Categoria> novaCategoria = findById(categoria.getId());
+		if (novaCategoria.isPresent()) {
+			
+			updateData(novaCategoria.get(),categoria);
+			
+			return categoriaRepository.save(novaCategoria.get());
+		}
+		return null;
 
 	}
 
@@ -76,6 +82,13 @@ public class CategoriaServiceImpl implements CategoriaService {
 	public Categoria fromDTO(CategoriaDTO categoriaDTO) {
 		return new Categoria(categoriaDTO.getId(),categoriaDTO.getNome());
 	}
+	
+	private void updateData(Categoria novaCategoria,Categoria categoria) {
+		
+		novaCategoria.setNome(categoria.getNome());
+	
+	}
+	
 	
 
 }

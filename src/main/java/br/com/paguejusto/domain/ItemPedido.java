@@ -23,6 +23,18 @@ public class ItemPedido implements Serializable {
 	private Integer quantidade;
 	private BigDecimal preco;
 
+	public ItemPedido() {
+	}
+
+	public ItemPedido(Pedido pedido, Produto produto, BigDecimal desconto, Integer quantidade, BigDecimal preco) {
+		super();
+		id.setPedido(pedido);
+		id.setProduto(produto);
+		this.desconto = desconto;
+		this.quantidade = quantidade;
+		this.preco = preco;
+	}
+	
 	public BigDecimal getDesconto() {
 		return desconto;
 	}

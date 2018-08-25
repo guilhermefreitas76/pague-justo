@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 
 import br.com.paguejusto.domain.Cliente;
 import br.com.paguejusto.dto.ClienteDTO;
+import br.com.paguejusto.dto.ClienteNewDTO;
 
 
 public interface ClienteService {
@@ -26,6 +27,10 @@ public interface ClienteService {
 	public abstract Page<Cliente> findPage(Integer page,Integer linesPerPage,String orderBy, String direction);
 		
 	public abstract Cliente fromDTO(ClienteDTO clienteDTO);
+	
+	public abstract Cliente fromDTO(ClienteNewDTO clienteNewDTO);
+	
+	public abstract Cliente findByEmail(String email);
 	
 
 }

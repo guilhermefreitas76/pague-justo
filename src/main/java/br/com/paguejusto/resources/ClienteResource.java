@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.paguejusto.domain.Cliente;
 import br.com.paguejusto.domain.Cliente;
 import br.com.paguejusto.dto.ClienteDTO;
+import br.com.paguejusto.dto.ClienteNewDTO;
 import br.com.paguejusto.services.ClienteService;
 import javassist.tools.rmi.ObjectNotFoundException;
 
@@ -45,18 +46,13 @@ public class ClienteResource {
 	}
 
 	
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO clienteDTO) {
-
-		Cliente cliente = clienteService.fromDTO(clienteDTO);
-
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO clienteNewDTO ) {
+		Cliente cliente = clienteService.fromDTO(clienteNewDTO);
 		cliente = clienteService.insert(cliente);
-
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId())
-				.toUri();
-
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(cliente.getId()).toUri();
 		return ResponseEntity.created(uri).build();
-
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)

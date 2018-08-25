@@ -22,9 +22,9 @@ public class PedidoResource {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Pedido find(@PathVariable Long id) {
 		try {
-			Optional<Pedido> cliente = pedidoService.findById(id);
+			Optional<Pedido> pedito = pedidoService.findById(id);
 
-			return cliente.orElseThrow(() -> new ObjectNotFoundException(
+			return pedito.orElseThrow(() -> new ObjectNotFoundException(
 					"Objeto não encontrado id: " + id + ", Tipo: " + Pedido.class.getName()));
 		} catch (ObjectNotFoundException e) {
 			e.printStackTrace();

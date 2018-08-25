@@ -34,6 +34,19 @@ public class Produto extends Abstract {
 	@OneToMany(mappedBy="id.produto")
 	private Set<ItemPedido> itensPedido = new HashSet<>();
 	
+
+	public Produto() {
+	}
+	
+	public Produto(Long id, String nome, BigDecimal preco) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.preco = preco;
+	}
+
+	
+	
 	@JsonIgnore
 	public List<Pedido> getPedidos(){
 		

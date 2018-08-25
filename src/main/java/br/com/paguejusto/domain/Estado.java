@@ -20,6 +20,15 @@ public class Estado extends Abstract {
 	@JsonIgnore
 	@OneToMany(mappedBy = "estado")
 	private List<Cidade> cidades = new ArrayList<>();
+	
+	public Estado() {
+	}
+
+	public Estado(Long id, String nome) {
+		super();
+		this.id = id;
+		this.nome = nome;
+	}
 
 	public String getNome() {
 		return nome;

@@ -4,7 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,9 +22,20 @@ public class Pagamento extends Abstract {
 	private Integer estadoPagamento;
 
 	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "pedido_id")
+	@OneToOne
+	@JoinColumn(name="pedido_id")
+	@MapsId
 	private Pedido pedido;
+	
+	public Pagamento(){}
+	
+	public Pagamento(Long id,EstadoPagamento estadoPagamento, Pedido pedido) {
+		this.id=id;
+		this.estadoPagamento = (estadoPagamento == null) ? null : estadoPagamento.getCodigo();
+		this.pedido=pedido;
+	}
+	
+	
 
 	public EstadoPagamento getEstadoPagamento() {
 		return EstadoPagamento.toEnum(estadoPagamento);

@@ -4,10 +4,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -21,7 +23,7 @@ public class Pedido extends Abstract {
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date instante;
 
-	@ManyToOne
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
 	@JoinColumn(name = "pagamento_id")
 	private Pagamento pagamento;
 
@@ -35,6 +37,19 @@ public class Pedido extends Abstract {
 	
 	@OneToMany(mappedBy="id.pedido")
 	private Set<ItemPedido> itensPedido = new HashSet<>();
+	
+	
+	public Pedido() {
+	}
+
+	public Pedido(Long id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
+		super();
+		this.id = id;
+		this.instante = instante;
+		this.cliente = cliente;
+		this.enderecoDeEntrega = enderecoDeEntrega;
+	}
+
 
 	public Date getInstante() {
 		return instante;

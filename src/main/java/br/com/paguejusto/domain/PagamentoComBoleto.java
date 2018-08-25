@@ -7,6 +7,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import br.com.paguejusto.domain.enums.EstadoPagamento;
+
 @Entity
 @Table(name = "tb_pagamento_com_boleto")
 public class PagamentoComBoleto extends Pagamento {
@@ -19,6 +21,15 @@ public class PagamentoComBoleto extends Pagamento {
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dataPagamento;
 
+	public PagamentoComBoleto() {
+	}
+
+	public PagamentoComBoleto(Long id, EstadoPagamento estado, Pedido pedido, Date dataVencimento, Date dataPagamento) {
+		super(id, estado, pedido);
+		this.dataPagamento = dataPagamento;
+		this.dataVencimento = dataVencimento;
+	}
+	
 	public Date getDataVencimento() {
 		return dataVencimento;
 	}
