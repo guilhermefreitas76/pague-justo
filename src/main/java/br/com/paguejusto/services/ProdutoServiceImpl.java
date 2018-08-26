@@ -25,33 +25,37 @@ public class ProdutoServiceImpl implements ProdutoService {
 	private CategoriaRepository categoriaRepository;
 
 	@Override
-	public Optional<Produto> findById(Long id) {
-		
+	public Produto findById(Long id) {
+
 		Optional<Produto> produto = produtoRepository.findById(id);
-		
-		if (produto==null) {
-			throw new PagueJustotNotFoundException("Objeto não encontrado! id: " + id + "Tipo: " + Produto.class.getName());
+
+		if (produto.isPresent()) {
+
+			return produto.get();
 		}
-		return produto;
+
+		else {
+			throw new PagueJustotNotFoundException(
+					"Objeto não encontrado! id: " + id + "Tipo: " + Produto.class.getName());
+		}
+
 	}
 
 	@Override
 	public void saveAll(List<Produto> produtos) {
 		produtoRepository.saveAll(produtos);
-		
+
 	}
 
 	@Override
-	public Page<Produto> search(String nome, List<Long> ids,Integer page, Integer linesPerPage, String orderBy, String direction) {
-		
+	public Page<Produto> search(String nome, List<Long> ids, Integer page, Integer linesPerPage, String orderBy,
+			String direction) {
+
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		
+
 		List<Categoria> categorias = (List<Categoria>) categoriaRepository.findAllById(ids);
-		
+
 		return produtoRepository.findDistinctByNomeContainingAndCategoriasIn(nome, categorias, pageRequest);
 	}
-
-		
-	
 
 }

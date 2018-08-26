@@ -1,7 +1,6 @@
 package br.com.paguejusto.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
@@ -12,7 +11,7 @@ import br.com.paguejusto.dto.ClienteNewDTO;
 
 public interface ClienteService {
 	
-	public abstract Optional<Cliente> findById(Long id);
+	public abstract Cliente findById(Long id);
 	
 	public abstract void saveAll(List<Cliente> clientes);
 	

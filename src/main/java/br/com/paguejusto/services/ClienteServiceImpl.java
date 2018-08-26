@@ -35,15 +35,18 @@ public class ClienteServiceImpl implements ClienteService {
 	private EnderecoRepository enderecoRepository;
 
 	@Override
-	public Optional<Cliente> findById(Long id) {
+	public Cliente findById(Long id) {
 
 		Optional<Cliente> cliente = clienteRepository.findById(id);
 
-		if (cliente == null) {
+		if (cliente.isPresent()) {
+			return cliente.get();
+		}
+
+		else {
 			throw new PagueJustotNotFoundException(
 					"Objeto não encontrado! id: " + id + "Tipo: " + Cliente.class.getName());
 		}
-		return cliente;
 	}
 
 	@Override
@@ -56,9 +59,9 @@ public class ClienteServiceImpl implements ClienteService {
 	@Transactional
 	public Cliente insert(Cliente cliente) {
 		cliente.setId(null);
-	
+
 		cliente = clienteRepository.save(cliente);
-		
+
 		enderecoRepository.saveAll(cliente.getEnderecos());
 
 		return cliente;
@@ -67,14 +70,12 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public Cliente update(Cliente cliente) {
-		Optional<Cliente> novoCliente = findById(cliente.getId());
-		if (novoCliente.isPresent()) {
 
-			updateData(novoCliente.get(), cliente);
+		Cliente novoCliente = findById(cliente.getId());
 
-			return clienteRepository.save(novoCliente.get());
-		}
-		return null;
+		updateData(novoCliente, cliente);
+
+		return clienteRepository.save(novoCliente);
 
 	}
 
@@ -83,7 +84,8 @@ public class ClienteServiceImpl implements ClienteService {
 		try {
 			clienteRepository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityViolationException("Não é possivel excluir uma cliente que possui pedidos relacionados!");
+			throw new DataIntegrityViolationException(
+					"Não é possivel excluir uma cliente que possui pedidos relacionados!");
 		}
 	}
 
@@ -140,7 +142,7 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public Cliente findByEmail(String email) {
-		
+
 		return clienteRepository.findByEmail(email);
 	}
 

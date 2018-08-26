@@ -2,7 +2,6 @@ package br.com.paguejusto.resources;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -19,11 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.paguejusto.domain.Cliente;
-import br.com.paguejusto.domain.Cliente;
 import br.com.paguejusto.dto.ClienteDTO;
 import br.com.paguejusto.dto.ClienteNewDTO;
 import br.com.paguejusto.services.ClienteService;
-import javassist.tools.rmi.ObjectNotFoundException;
 
 @RestController
 @RequestMapping(value = "/clientes")
@@ -34,32 +31,25 @@ public class ClienteResource {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Cliente find(@PathVariable Long id) {
-		try {
-			Optional<Cliente> cliente = clienteService.findById(id);
 
-			return cliente.orElseThrow(() -> new ObjectNotFoundException(
-					"Objeto não encontrado id: " + id + ", Tipo: " + Cliente.class.getName()));
-		} catch (ObjectNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return clienteService.findById(id);
+
 	}
 
-	
-	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO clienteNewDTO ) {
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO clienteNewDTO) {
 		Cliente cliente = clienteService.fromDTO(clienteNewDTO);
 		cliente = clienteService.insert(cliente);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(cliente.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId())
+				.toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO clienteDTO, @PathVariable Long id) {
-	
+
 		Cliente cliente = clienteService.fromDTO(clienteDTO);
-		
+
 		cliente.setId(id);
 		cliente = clienteService.update(cliente);
 
@@ -100,5 +90,4 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(listaClienteDTO);
 	}
 
-	
 }

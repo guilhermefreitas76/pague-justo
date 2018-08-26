@@ -34,6 +34,8 @@ public class PedidoServiceImpl implements PedidoService {
 	@Autowired
 	private ProdutoService produtoService;
 	
+	@Autowired
+	private ClienteService clienteService;
 	
 
 	@Override
@@ -57,6 +59,8 @@ public class PedidoServiceImpl implements PedidoService {
 	public Pedido save(Pedido pedido) {
 		pedido.setId(null);
 		pedido.setInstante(new Date());
+		pedido.setCliente(clienteService.findById(pedido.getCliente().getId()));
+		
 		pedido.getPagamento().setEstadoPagamento(EstadoPagamento.PENDENTE);
 		pedido.getPagamento().setPedido(pedido);
 		if (pedido.getPagamento() instanceof PagamentoComBoleto) {
@@ -73,10 +77,14 @@ public class PedidoServiceImpl implements PedidoService {
 		for (ItemPedido itemPedido : pedido.getItensPedido()) {
 			//Quando for dinamico...mudar o desconto..
 			itemPedido.setDesconto(new BigDecimal(0.0));
-			itemPedido.setPreco(produtoService.findById(itemPedido.getProduto().getId()).get().getPreco());
+			itemPedido.setProduto(produtoService.findById(itemPedido.getProduto().getId()));
+			itemPedido.setPreco(itemPedido.getProduto().getPreco());
 			itemPedido.setPedido(pedido);
+		
 		}
 		itemPedidoService.saveAll(pedido.getItensPedido());
+		
+		System.out.println(pedido);
 		
 		return pedido;
 	}

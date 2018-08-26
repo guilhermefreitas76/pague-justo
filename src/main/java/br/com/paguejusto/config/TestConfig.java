@@ -17,9 +17,16 @@ public class TestConfig {
 	
 	public boolean instantiateDatabase() throws ParseException {
 	
+		int i =0;
+		
+		if(i==0) {
+			dbService.instantiateTestDatabase();
+			return true;		
+		}
 		dbService.instantiateTestDatabase();
 		
-		return true;
+		return false;
+		
 	}
 	
 }

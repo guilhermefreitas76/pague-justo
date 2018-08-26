@@ -1,8 +1,11 @@
 package br.com.paguejusto.domain;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -36,7 +39,7 @@ public class Pedido extends Abstract {
 	@JoinColumn(name = "endereco__de_entrega_id")
 	private Endereco enderecoDeEntrega;
 
-	@OneToMany(mappedBy = "id.pedido",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "id.pedido", cascade = CascadeType.ALL)
 	private Set<ItemPedido> itensPedido = new HashSet<>();
 
 	public Pedido() {
@@ -100,6 +103,34 @@ public class Pedido extends Abstract {
 
 	public void setItensPedido(Set<ItemPedido> itensPedido) {
 		this.itensPedido = itensPedido;
+	}
+
+	@Override
+	public String toString() {
+
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+
+		StringBuilder builder = new StringBuilder();
+		builder.append("Pedido número: ");
+		builder.append(getId());
+		builder.append(", Instante: ");
+		builder.append(sdf.format(getInstante()));
+		builder.append(", Cliente: ");
+		builder.append(getCliente().getNome());
+		builder.append(", Situação Pagamento: ");
+		builder.append(getPagamento().getEstadoPagamento().getDescricao());
+		builder.append("\nDetalhes:\n");
+
+		for (ItemPedido itemPedido : getItensPedido()) {
+			builder.append(itemPedido.toString());
+
+		}
+
+		builder.append("Valor Total: ");
+		builder.append(nf.format(getValorToral()));
+
+		return builder.toString();
 	}
 
 }
