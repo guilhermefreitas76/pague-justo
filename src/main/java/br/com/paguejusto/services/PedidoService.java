@@ -11,5 +11,7 @@ public interface PedidoService {
 	public abstract Optional<Pedido> findById(Long id);
 	
 	public abstract void saveAll(List<Pedido> pedidos);
+	
+	public abstract Pedido save(Pedido pedido);
 
 }

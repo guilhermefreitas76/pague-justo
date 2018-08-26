@@ -1,5 +1,6 @@
 package br.com.paguejusto.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,10 +21,10 @@ public class Pedido extends Abstract {
 
 	private static final long serialVersionUID = 1L;
 
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date instante;
 
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	@JoinColumn(name = "pagamento_id")
 	private Pagamento pagamento;
 
@@ -34,11 +35,10 @@ public class Pedido extends Abstract {
 	@ManyToOne
 	@JoinColumn(name = "endereco__de_entrega_id")
 	private Endereco enderecoDeEntrega;
-	
-	@OneToMany(mappedBy="id.pedido")
+
+	@OneToMany(mappedBy = "id.pedido",cascade=CascadeType.ALL)
 	private Set<ItemPedido> itensPedido = new HashSet<>();
-	
-	
+
 	public Pedido() {
 	}
 
@@ -50,6 +50,17 @@ public class Pedido extends Abstract {
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 
+	public BigDecimal getValorToral() {
+
+		BigDecimal soma = new BigDecimal(0.0);
+
+		for (ItemPedido itemPedido : itensPedido) {
+			soma = soma.add(itemPedido.getSubTotal());
+
+		}
+
+		return soma;
+	}
 
 	public Date getInstante() {
 		return instante;
@@ -90,5 +101,5 @@ public class Pedido extends Abstract {
 	public void setItensPedido(Set<ItemPedido> itensPedido) {
 		this.itensPedido = itensPedido;
 	}
-	
+
 }

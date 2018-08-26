@@ -18,11 +18,12 @@ public class PagamentoServiceImpl implements PagamentoService {
 
 	@Override
 	public Optional<Pagamento> findById(Long id) {
-		
+
 		Optional<Pagamento> pagamento = pagamentoRepository.findById(id);
-		
-		if (pagamento==null) {
-			throw new PagueJustotNotFoundException("Objeto não encontrado! id: " + id + "Tipo: " + Pagamento.class.getName());
+
+		if (pagamento == null) {
+			throw new PagueJustotNotFoundException(
+					"Objeto não encontrado! id: " + id + "Tipo: " + Pagamento.class.getName());
 		}
 		return pagamento;
 	}
@@ -30,7 +31,13 @@ public class PagamentoServiceImpl implements PagamentoService {
 	@Override
 	public void saveAll(List<Pagamento> pagamentos) {
 		pagamentoRepository.saveAll(pagamentos);
-		
+
+	}
+
+	@Override
+	public Pagamento save(Pagamento pagamento) {
+
+		return pagamentoRepository.save(pagamento);
 	}
 
 }

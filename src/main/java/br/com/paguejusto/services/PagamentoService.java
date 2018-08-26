@@ -11,5 +11,9 @@ public interface PagamentoService {
 	public abstract Optional<Pagamento> findById(Long id);
 	
 	public abstract void saveAll(List<Pagamento> pagamentos);
+	
+	public abstract Pagamento save(Pagamento pagamento);
+	
+	
 
 }

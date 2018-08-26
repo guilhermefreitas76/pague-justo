@@ -9,13 +9,15 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import br.com.paguejusto.domain.enums.EstadoPagamento;
 
 @Entity
 @Table(name = "tb_pagamento")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Pagamento extends Abstract {
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
+public abstract class Pagamento extends Abstract {
 
 	private static final long serialVersionUID = 1L;
 

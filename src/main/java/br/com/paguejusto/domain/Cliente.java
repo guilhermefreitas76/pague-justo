@@ -70,7 +70,7 @@ public class Cliente extends Abstract {
 	public TipoCliente getTipoCliente() {
 		return TipoCliente.toEnum(tipoCliente);
 	}
-
+	@JsonIgnore
 	public void setTipoCliente(TipoCliente tipoCliente) {
 		this.tipoCliente = tipoCliente.getCodigo();
 	}

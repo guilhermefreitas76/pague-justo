@@ -1,10 +1,11 @@
 package br.com.paguejusto.services;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.paguejusto.domain.ItemPedido;
 import br.com.paguejusto.repositories.ItemPedidoRepository;
@@ -28,7 +29,8 @@ public class ItemPedidoServiceImpl implements ItemPedidoService {
 	}
 
 	@Override
-	public void saveAll(List<ItemPedido> itensPedidos) {
+	@Transactional
+	public void saveAll(Set<ItemPedido> itensPedidos) {
 		itemPedidoRepository.saveAll(itensPedidos);
 		
 	}
